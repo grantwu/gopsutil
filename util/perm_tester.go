@@ -1,3 +1,4 @@
+// +build darwin,linux
 package util
 
 import (
