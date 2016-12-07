@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/shirou/gopsutil/internal/common"
+	"github.com/shirou/gopsutil/util"
 )
 
 type LSB struct {
@@ -67,7 +68,7 @@ func Info() (*InfoStat, error) {
 
 	sysProductUUID := common.HostSys("class/dmi/id/product_uuid")
 	switch {
-	case common.PathExists(sysProductUUID):
+	case common.PathExists(sysProductUUID) && util.CanRead(sysProductUUID):
 		lines, err := common.ReadLines(sysProductUUID)
 		if err == nil && len(lines) > 0 && lines[0] != "" {
 			ret.HostID = lines[0]
