@@ -12,11 +12,11 @@ func CanRead(file string) bool {
 	}
 	fm := stat.Mode()
 	if fm & (1 << 2) != 0 {
-		return true, nil
+		return true
 	} else if (fm & (1 << 5)) != 0 && (os.Getegid() == int(stat.Sys().(*syscall.Stat_t).Gid)) {
-		return true, nil
+		return true
 	} else if (fm & (1 << 8)) != 0 && (os.Geteuid() == int(stat.Sys().(*syscall.Stat_t).Uid)) {
-		return true, nil
+		return true
 	}
-	return false, nil
+	return false
 }
