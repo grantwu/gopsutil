@@ -14,6 +14,7 @@ import (
 	"syscall"
 
 	"github.com/shirou/gopsutil/internal/common"
+	"github.com/shirou/gopsutil/util"
 )
 
 // NetIOCounters returnes network I/O statistics for every network
@@ -372,6 +373,9 @@ func getProcInodes(root string, pid int32) (map[string][]inodeMap, error) {
 	ret := make(map[string][]inodeMap)
 
 	dir := fmt.Sprintf("%s/%d/fd", root, pid)
+	if !util.CanRead(dir) {
+		return ret, nil
+	}
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return ret, nil
